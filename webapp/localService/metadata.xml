@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://vhcalm19ci:4300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhcalm19ci:4300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhcalm19ci:4300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhcalm19ci:4300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://vhcalm19ci:4300/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZPINBALL_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZCDSPINBALLType" sap:label="ZCDSPINBALL" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Tableid"/>
+                </Key>
+                <Property Name="Tableid" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="NonNegative" sap:label="Table Id" sap:creatable="false" sap:updatable="false"/>
+                <Property Name="Tablename" Type="Edm.String" MaxLength="128" sap:label="Table Name"/>
+                <Property Name="Vendorid" Type="Edm.Int32" sap:label="Vendor ID"/>
+                <Property Name="VendorName" Type="Edm.String" MaxLength="128" sap:label="Vendor Name" sap:value-list="fixed-values"/>
+                <Property Name="Tableyear" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Table Year"/>
+                <Property Name="Produced" Type="Edm.Decimal" Precision="15" Scale="0" sap:unit="Units" sap:label="Produced"/>
+                <Property Name="Units" Type="Edm.String" MaxLength="3" sap:label="Units" sap:creatable="false" sap:updatable="false" sap:semantics="unit-of-measure"/>
+                <NavigationProperty Name="toVendor" Relationship="ZPINBALL_SRV.assoc_EA96B937A6BD36B897B6F6FE0D16DB39" FromRole="FromRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39" ToRole="ToRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39"/>
+            </EntityType>
+            <EntityType Name="ZCDSPINBALLVENDORType" sap:label="ZCDSPINBALLVENDOR" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Vendorid"/>
+                </Key>
+                <Property Name="Vendorid" Type="Edm.Int32" Nullable="false" sap:label="INT4" sap:quickinfo="4 Byte Signed Integer"/>
+                <Property Name="Vendorname" Type="Edm.String" MaxLength="128" sap:label="Vendor Name" sap:quickinfo="128 Lowercase and Uppercase Letters"/>
+                <Property Name="Vendorcity" Type="Edm.String" MaxLength="128" sap:label="Text" sap:quickinfo="128 Lowercase and Uppercase Letters"/>
+                <Property Name="Vendoremail" Type="Edm.String" MaxLength="241" sap:label="E-Mail Address"/>
+            </EntityType>
+            <Association Name="assoc_EA96B937A6BD36B897B6F6FE0D16DB39" sap:content-version="1">
+                <End Type="ZPINBALL_SRV.ZCDSPINBALLType" Multiplicity="1" Role="FromRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39"/>
+                <End Type="ZPINBALL_SRV.ZCDSPINBALLVENDORType" Multiplicity="0..1" Role="ToRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39"/>
+            </Association>
+            <EntityContainer Name="ZPINBALL_SRV_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZCDSPINBALL" EntityType="ZPINBALL_SRV.ZCDSPINBALLType" sap:content-version="1"/>
+                <EntitySet Name="ZCDSPINBALLVENDOR" EntityType="ZPINBALL_SRV.ZCDSPINBALLVENDORType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:searchable="true" sap:content-version="1"/>
+                <AssociationSet Name="assoc_EA96B937A6BD36B897B6F6FE0D16DB39" Association="ZPINBALL_SRV.assoc_EA96B937A6BD36B897B6F6FE0D16DB39" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ZCDSPINBALL" Role="FromRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39"/>
+                    <End EntitySet="ZCDSPINBALLVENDOR" Role="ToRole_assoc_EA96B937A6BD36B897B6F6FE0D16DB39"/>
+                </AssociationSet>
+            </EntityContainer>
+            <Annotations Target="ZPINBALL_SRV.ZCDSPINBALLType/VendorName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="ZCDSPINBALLVENDOR"/>
+                        <PropertyValue Property="CollectionPath" String="ZCDSPINBALLVENDOR"/>
+                        <PropertyValue Property="SearchSupported" Bool="true"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="VendorName"/>
+                                    <PropertyValue Property="ValueListProperty" String="Vendorname"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Vendorid"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Vendorcity"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="Vendoremail"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="ZPINBALL_SRV.ZPINBALL_SRV_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZPINBALL_SRV.ZCDSPINBALLType/Produced" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="ZPINBALL_SRV.ZCDSPINBALLType/Tablename" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <Annotations Target="ZPINBALL_SRV.ZCDSPINBALLType/Tableyear" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+            </Annotations>
+            <atom:link rel="self" href="https://vhcalm19ci:4300/sap/opu/odata/sap/ZPINBALL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vhcalm19ci:4300/sap/opu/odata/sap/ZPINBALL_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

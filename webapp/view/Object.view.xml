@@ -1,0 +1,125 @@
+<mvc:View xmlns:core="sap.ui.core"
+    controllerName="project9.controller.Object"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout">
+    <Page showNavButton="true"
+        navButtonPress="onBack">
+        <content>
+            <l:Grid id="grid0"
+                defaultSpan="L12 M12 S12"
+                width="{=${device>/system/desktop} ? '50%' : '100%' }"
+                position="Center">
+                <l:content>
+                    <f:Form id="FormToolbar"
+                        editable="true">
+                        <f:layout>
+                            <f:ResponsiveGridLayout id="responsiveGridLayout0"
+                                labelSpanXL="4"
+                                labelSpanL="3"
+                                labelSpanM="4"
+                                labelSpanS="12"
+                                adjustLabelSpan="false"
+                                emptySpanXL="0"
+                                emptySpanL="0"
+                                emptySpanM="0"
+                                emptySpanS="0"
+                                columnsXL="2"
+                                columnsL="1"
+                                columnsM="1"
+                                singleContainerFullSize="false"/>
+                        </f:layout>
+                        <f:formContainers>
+                            <f:FormContainer id="formContainer0">
+                                <f:formElements>
+                                    <f:FormElement id="formElement0">
+                                        <f:fields>
+                                            <Label text="Tableid"
+                                                labelFor="inputTableid"/>
+                                            <Input id="inputTableid"
+                                                type="Text"
+                                                enabled="false"
+                                                value="{Tableid}"
+                                                change=".onChange"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="formElement1">
+                                        <f:fields>
+                                            <Label text="Tablename"
+                                                labelFor="inputTablename"/>
+                                            <Input id="inputTablename"
+                                                type="Text"
+                                                value="{path:'Tablename', type: 'sap.ui.model.type.String', constraints:{ search : '[^\\s]'}}"
+                                                change=".onChange"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="formElement2">
+                                        <f:fields>
+                                            <Label text="Vendorname"
+                                                labelFor="inputVendorname"/>
+                                            <Select items="{/ZCDSPINBALLVENDOR}"
+                                                selectedKey="{Vendorid}"
+                                                change=".onChange">
+                                                <items>
+                                                    <core:ListItem key="{Vendorid}"
+                                                        text="{Vendorname}"/>
+                                                </items>
+                                            </Select>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="formElement3">
+                                        <f:fields>
+                                            <Label text="Tableyear"
+                                                labelFor="inputTableyear"/>
+                                            <DatePicker id="datePicker0"
+                                                value="{path:'Tableyear',type: 'sap.ui.model.type.Date',formatOptions: {style: 'medium'}}"
+                                                change=".onChange"/>
+                                        </f:fields>
+                                    </f:FormElement>
+                                    <f:FormElement id="formElement4">
+                                        <f:fields>
+                                            <Label text="Produced"
+                                                labelFor="inputProduced"/>
+                                            <Input id="inputProduced"
+                                                type="Number"
+                                                value="{Produced}"
+                                                valueLiveUpdate="false"
+                                                change=".onChange">
+                                                <layoutData>
+                                                    <l:GridData id="gridData0"
+                                                        span="XL4 L4 M4 S4"/>
+                                                </layoutData>
+                                            </Input>
+                                            <Input type="Text"
+                                                value="{Units}"
+                                                enabled="false">
+                                                <layoutData>
+                                                    <l:GridData id="gridData1"
+                                                        span="XL2 L2 M2 S2"/>
+                                                </layoutData>
+                                            </Input>
+                                        </f:fields>
+                                    </f:FormElement>
+                                </f:formElements>
+                            </f:FormContainer>
+                        </f:formContainers>
+                    </f:Form>
+                </l:content>
+            </l:Grid>
+        </content>
+        <footer>
+            <OverflowToolbar>
+                <Button id="popover"
+                    icon="sap-icon://message-popup"
+                    text="{=${message>/}.length}"
+                    type="Emphasized"
+                    press=".handleSave" />
+                <ToolbarSpacer/>
+                <Button icon="sap-icon://save"
+                    enabled="{app>/objectView/saveEnabled}"
+                    press=".onSave"/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>
