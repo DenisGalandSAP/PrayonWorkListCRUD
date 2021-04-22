@@ -33,7 +33,7 @@ sap.ui.define([
                 this._initializeMessageManager();
                 if (this.sAction === "add") {
                     //Create a temporary entry in the request queue
-                    var oContext = this.getModel().createEntry("ZCDSPINBALL", {
+                    var oContext = this.getModel().createEntry("/ZCDSPINBALL", {
                         properties: {
                             "Tableid": sObjectId,
                             "Tablename": "",
@@ -44,6 +44,7 @@ sap.ui.define([
                             "Units": "EA"
                         }
                     });
+                    debugger;
                     this.sPath = oContext.sPath;
                     this.getView().bindElement({
                         path: this.sPath
@@ -100,7 +101,7 @@ sap.ui.define([
                 this.getModel().setProperty(`${this.sPath}/Vendorid`, oEvent.getParameter("selectedItem").getKey());
                 this.getModel().setProperty(`${this.sPath}/VendorName`, oEvent.getParameter("selectedItem").getText());
                 //For Tableyear and Produced field, manually insert or delete in the Message Manager Model 
-            } else if (["Tableyear", "Produced"].includes(oEvent.getSource().getBinding("value").sPath)) {
+            } else if (["Tableyear", "Produced", "Tablename"].includes(oEvent.getSource().getBinding("value").sPath)) {
                 if (!!oEvent.getSource().getValue()) {
                     var oMessage = this._oMessageManager.getMessageModel().getData().filter((oMessage) => {
                         return oMessage.target === oEvent.getSource().getId()
@@ -109,6 +110,7 @@ sap.ui.define([
                         this._oMessageManager.removeMessages(oMessage);
                         oEvent.getSource().setValueState("None");
                     }
+
                 } else {
                     oEvent.getSource().setValueState("Error");
                     oEvent.getSource().setValueStateText("Enter a value");
@@ -119,6 +121,7 @@ sap.ui.define([
                             "type": "Error"
                         })]);
                 }
+                //}
             }
             this.getModel("app").setProperty("/objectView/saveEnabled", true);
         },

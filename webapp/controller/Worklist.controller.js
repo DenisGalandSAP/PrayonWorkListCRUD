@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, MessageBox) {
     "use strict";
 
     return BaseController.extend("project9.controller.Worklist", {
@@ -134,12 +135,18 @@ sap.ui.define([
 
         onDelete: function () {
             var sPath = this.getView().byId("table").getSelectedItem().getBindingContextPath();
-            this.getModel().remove(sPath, {
-                success: (oResponse) => {
-                    console.log(oResponse)
-                },
-                error: (oError) => {
-                    console.log(oError);
+            MessageBox.confirm("Are you sure you want to delete the record?", {
+                onClose: sAction => {
+                    if (sAction === "OK") {
+                        this.getModel().remove(sPath, {
+                            success: (oResponse) => {
+                                console.log(oResponse)
+                            },
+                            error: (oError) => {
+                                console.log(oError);
+                            }
+                        });
+                    }
                 }
             });
         },
